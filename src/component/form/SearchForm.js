@@ -3,9 +3,8 @@ import { Alert, Button, Col, Form, Row } from "react-bootstrap";
 import { fetchMovie } from "../../helpers/axiosHelper";
 import { CustomCard } from "../card/CustomCard";
 
-export const SearchForm = () => {
+export const SearchForm = ({ handleOnAddToList, getMovie }) => {
   const [search, setSearch] = useState("");
-  const [movie, setMovie] = useState({});
 
   const handleOnChange = (e) => {
     const { value } = e.target;
@@ -14,13 +13,9 @@ export const SearchForm = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
-
-    const movie = await fetchMovie(search);
-
-    console.log(movie);
-    setMovie(movie.data);
+    getMovie(search);
+    setSearch("");
   };
-  console.log(movie);
 
   return (
     <>
@@ -31,6 +26,7 @@ export const SearchForm = () => {
             <Form.Control
               placeholder="Search..."
               onChange={handleOnChange}
+              value={search}
               required
             />
           </Col>
@@ -41,16 +37,6 @@ export const SearchForm = () => {
           </Col>
         </Row>
       </Form>
-
-      <Row>
-        <Col className="d-flex justify-content-center">
-          {movie.Response === "True" && <CustomCard movie={movie} />}
-
-          {movie.Response === "False" && (
-            <Alert variant="danger">{movie.Error}</Alert>
-          )}
-        </Col>
-      </Row>
     </>
   );
 };
