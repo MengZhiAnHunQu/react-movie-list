@@ -8,24 +8,24 @@ import { fetchMovie } from "./helpers/axiosHelper";
 import { CustomCard } from "./component/card/CustomCard";
 
 const App = () => {
-  const [movieMainList, setMainMovieList] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [movie, setMovie] = useState({});
+  const [category, setCategory] = useState("");
 
   const getMovie = async (search) => {
     const movie = await fetchMovie(search);
     setMovie(movie.data);
   };
 
-  const handleOnAddToList = (category, movie) => {
-    const obj = { ...movie, category };
+  const handleOnAddToList = (cat, movie) => {
+    const obj = { ...movie, cat };
     // adding movie for the first time
-    !movieList.length && setMovieList([obj]) && setMainMovieList([obj]); //if the left side is true , then run right side
+    !movieList.length && setMovieList([obj]); //if the left side is true , then run right side
     //adding after first time
     const isExist = movieList.find((item) => item.imdbID === movie.imdbID);
     if (!isExist) {
       setMovieList([...movieList, obj]);
-      setMainMovieList([...movieMainList, obj]);
+
       setMovie({});
     } else {
       alert("Movie already in the list");
@@ -35,35 +35,23 @@ const App = () => {
   //console.log(movieList);
 
   const handleOnDelete = (imdbID) => {
-    const filteredList = movieMainList.filter((item) => item.imdbID !== imdbID);
+    const filteredList = movieList.filter((item) => item.imdbID !== imdbID);
     console.log(filteredList);
 
     setMovieList(filteredList);
-    setMainMovieList(filteredList);
+
     console.log(imdbID);
   };
 
-  const hanleOnSelect = (category) => {
-    let filterArgs = [];
-
-    if (category) {
-      filterArgs = movieMainList.filter((item) => item.category === category);
-    } else {
-      filterArgs = movieMainList;
-    }
-    console.log(filterArgs);
-    setMovieList(filterArgs);
-    //if happy selected
-    // if sad selected
-    //all selected
-  };
+  const moviesToDisplay = category
+    ? movieList.filter((item) => item.cat === category)
+    : movieList;
 
   return (
     <div className="wrapper">
       <Container>
         <Title />
         <SearchForm handleOnAddToList={handleOnAddToList} getMovie={getMovie} />
-
         <div className="d-flex justify-content-center">
           {movie.Response === "True" && (
             <CustomCard movie={movie} fun={handleOnAddToList} />
@@ -73,11 +61,12 @@ const App = () => {
             <Alert variant="danger">{movie.Error}</Alert>
           )}
         </div>
+        {category || "all"} selected
         <hr />
         <MovieList
-          movieList={movieList}
+          movieList={moviesToDisplay}
           handleOnDelete={handleOnDelete}
-          hanleOnSelect={hanleOnSelect}
+          setCategory={setCategory}
         />
       </Container>
     </div>
