@@ -15,6 +15,7 @@ const App = () => {
   const getMovie = async (search) => {
     const movie = await fetchMovie(search);
     setMovie(movie.data);
+    console.log(movie.data.Plot);
   };
 
   const handleOnAddToList = (cat, movie) => {

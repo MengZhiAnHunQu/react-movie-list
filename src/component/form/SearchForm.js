@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
-import { fetchMovie } from "../../helpers/axiosHelper";
-import { CustomCard } from "../card/CustomCard";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 export const SearchForm = ({ handleOnAddToList, getMovie }) => {
   const [search, setSearch] = useState("");

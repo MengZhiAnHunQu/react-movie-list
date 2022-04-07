@@ -46,6 +46,7 @@ export const MovieList = ({ movieList, handleOnDelete, setCategory }) => {
             </Button>
           </ButtonGroup>
         </div>
+        
         <div className="row">
           {movieList.map((movie, i) =>
             display === "list" ? (

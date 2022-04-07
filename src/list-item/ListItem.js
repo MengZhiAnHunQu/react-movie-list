@@ -6,32 +6,23 @@ export const ListItem = ({ movie, fun, btnDelete }) => {
     <div>
       <Row>
         <Col md="4">
-          <img src={movie?.Poster} className="img-fluid" alt="" />
+          <img src={movie?.Poster} className="img-fluidgi" alt="" />
         </Col>
 
         <Col md="8">
-          <h3>{movie?.Title}</h3>
-          <h3>Rating:{movie?.imdbRating}</h3>
-          {btnDelete ? (
-            <div className="d-grid gap-2">
-              <Button
-                variant="secondary"
-                size="lg"
-                onClick={() => fun(movie.imdbID)}
-              >
-                Delete Movie
-              </Button>
-            </div>
-          ) : (
-            <div className="d-flex justify-content-between">
-              <Button variant="info" onClick={() => fun("happy", movie)}>
-                Happy list
-              </Button>
-              <Button variant="primary" onClick={() => fun("sad", movie)}>
-                Sad list
-              </Button>
-            </div>
-          )}
+          <h3>Movie Name: {movie?.Title}</h3>
+          <h3>Rating: {movie?.imdbRating}</h3>
+
+          {btnDelete}
+          <div className="d-grid gap-2">
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => fun(movie.imdbID)}
+            >
+              Delete Movie
+            </Button>
+          </div>
         </Col>
       </Row>
     </div>
