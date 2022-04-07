@@ -1,35 +1,25 @@
 import React from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Col } from "react-bootstrap";
 
 export const CustomCard = ({ movie, fun, btnDelete }) => {
   return (
-    <Card style={{ width: "18rem" }} className="mt-3 ">
-      <Card.Img variant="top" src={movie?.Poster} height="300px" />
-      <Card.Body>
-        <Card.Title>{movie?.Title}</Card.Title>
-        <Card.Title>{movie?.imdbRating}</Card.Title>
+    <Col sm="12" md="6" lg="4" xl="3" className="mt-5">
+      <Card>
+        <Card.Img variant="top" src={movie?.Poster} height="300px" />
+        <Card.Body>
+          <Card.Title>Movie Name: {movie?.Title}</Card.Title>
+          <Card.Title>Rating: {movie?.imdbRating}</Card.Title>
 
-        {btnDelete ? (
-          <div className="d-grid gap-2">
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => fun(movie.imdbID)}
-            >
-              Delete Movie
-            </Button>
-          </div>
-        ) : (
-          <div className="d-flex justify-content-between">
-            <Button variant="info" onClick={() => fun("happy", movie)}>
+          <div className="d-flex justify-content-between mt-3">
+            <Button variant="primary" onClick={() => fun("happy", movie)}>
               Happy list
             </Button>
-            <Button variant="primary" onClick={() => fun("sad", movie)}>
+            <Button variant="danger" onClick={() => fun("sad", movie)}>
               Sad list
             </Button>
           </div>
-        )}
-      </Card.Body>
-    </Card>
+        </Card.Body>
+      </Card>
+    </Col>
   );
 };
